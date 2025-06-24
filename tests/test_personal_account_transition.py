@@ -1,0 +1,51 @@
+from  selenium import webdriver
+
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions
+
+import sys
+from pathlib import Path
+
+sys.path.append(str(Path(__file__).parent.parent))
+
+from creds_randomizer import *
+from locators import Locators
+from urls import *
+from data import Creds
+
+class TestPersonalAccountTransition:
+
+    def test_personal_acc_transition_unauthorized_user(self):
+
+        driver = webdriver.Chrome()
+        driver.maximize_window()
+        driver.get(BASE_URL)
+        WebDriverWait(driver, 10).until(expected_conditions.visibility_of_element_located(Locators.PERSONAL_ACCOUNT_BUTTON))
+
+        driver.find_element(*Locators.PERSONAL_ACCOUNT_BUTTON).click()
+        WebDriverWait(driver, 10).until(expected_conditions.url_changes(BASE_URL))
+
+        assert driver.current_url == LOGIN_URL
+
+        driver.quit()
+
+    def test_personal_acc_transition_authorized_user(self):
+
+        driver = webdriver.Chrome()
+        driver.maximize_window()
+        driver.get(LOGIN_URL)
+        WebDriverWait(driver, 10).until(expected_conditions.visibility_of_element_located(Locators.LOG_LOGIN_BUTTON))
+
+        driver.find_element(*Locators.LOG_EMAIL_INPUT).send_keys(Creds.email)
+        driver.find_element(*Locators.LOG_PASSWORD_INPUT).send_keys(Creds.password)
+        driver.find_element(*Locators.LOG_LOGIN_BUTTON).click()
+        WebDriverWait(driver, 10).until(expected_conditions.url_changes(driver.current_url))
+
+        driver.find_element(*Locators.PERSONAL_ACCOUNT_BUTTON).click()
+        WebDriverWait(driver, 10).until(expected_conditions.url_changes(driver.current_url))
+
+        assert driver.current_url == PERSONAL_ACCOUNT_PROFILE_URL
+
+        driver.quit()
+
+    
