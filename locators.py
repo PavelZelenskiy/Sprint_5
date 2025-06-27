@@ -37,3 +37,4 @@ class Locators:
     CONSTRUCTOR_BUNS_HEADER = (By.XPATH, "//h2[contains(text(), 'Булки')]")
     CONSTRUCTOR_SAUCES_HEADER = (By.XPATH, "//h2[contains(text(), 'Соусы')]")
     CONSTRUCTOR_FILLINGS_HEADER = (By.XPATH, "//h2[contains(text(), 'Начинки')]")
+    CONSTRUCTOR_ACTIVE_TAB = (By.XPATH, "//div[contains(@class, 'tab_tab_type_current')]")

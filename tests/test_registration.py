@@ -1,5 +1,4 @@
-from  selenium import webdriver
-
+from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions
 
@@ -14,10 +13,8 @@ from urls import *
 
 class TestRegistrationForm:
 
-    def test_registration_successfull(self):
+    def test_registration_successfull(self, driver: WebDriver):
         
-        driver = webdriver.Chrome()
-        driver.maximize_window()
         driver.get(REG_URL)
         WebDriverWait(driver, 10).until(expected_conditions.visibility_of_element_located(Locators.REG_REGISTRATION_BUTTON))
 
@@ -31,12 +28,9 @@ class TestRegistrationForm:
 
         assert driver.current_url == LOGIN_URL
 
-        driver.quit()
-
-    def test_registration_password_length_less_six_simbols(self):
+    
+    def test_registration_password_length_less_six_simbols(self, driver: WebDriver):
         
-        driver = webdriver.Chrome()
-        driver.maximize_window()
         driver.get(REG_URL)
         WebDriverWait(driver, 10).until(expected_conditions.visibility_of_element_located(Locators.REG_REGISTRATION_BUTTON))
 
@@ -47,10 +41,10 @@ class TestRegistrationForm:
         driver.find_element(*Locators.REG_PASSWORD_INPUT).send_keys(password)
         driver.find_element(*Locators.REG_REGISTRATION_BUTTON).click()
         WebDriverWait(driver, 10).until(expected_conditions.visibility_of_element_located(Locators.REG_INCORRECT_PASSWORD_MESSAGE))
-
+        
         assert driver.find_element(*Locators.REG_INCORRECT_PASSWORD_MESSAGE).is_displayed() == True
+        
 
-        driver.quit()
-
+        
 
         

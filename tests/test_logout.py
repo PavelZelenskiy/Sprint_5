@@ -1,5 +1,4 @@
-from  selenium import webdriver
-
+from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions
 
@@ -15,10 +14,8 @@ from data import Creds
 
 class TestLogout:
 
-    def test_logout(self):
+    def test_logout(self, driver: WebDriver):
 
-        driver = webdriver.Chrome()
-        driver.maximize_window()
         driver.get(LOGIN_URL)
         WebDriverWait(driver, 10).until(expected_conditions.visibility_of_element_located(Locators.LOG_LOGIN_BUTTON))
 
@@ -32,10 +29,10 @@ class TestLogout:
 
         driver.find_element(*Locators.LOGOUT_BUTTON).click()
         WebDriverWait(driver, 10).until(expected_conditions.visibility_of_element_located(Locators.LOG_LOGIN_BUTTON))
-
+        
         assert driver.current_url == LOGIN_URL
 
-        driver.quit()
+        
 
         
 

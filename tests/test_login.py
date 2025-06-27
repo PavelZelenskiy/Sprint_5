@@ -1,5 +1,4 @@
-from  selenium import webdriver
-
+from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions
 
@@ -16,10 +15,8 @@ from data import Creds
 
 class TestLogin:
 
-    def test_login_from_main_site(self):
+    def test_login_from_main_site(self, driver: WebDriver):
        
-        driver = webdriver.Chrome()
-        driver.maximize_window()
         driver.get(BASE_URL)
         WebDriverWait(driver, 10).until(expected_conditions.visibility_of_element_located(Locators.LOG_BUTTON_MAIN_SITE))
 
@@ -33,12 +30,9 @@ class TestLogin:
 
         assert driver.current_url == BASE_URL
 
-        driver.quit()
 
-    def test_login_from_personal_account_button(self):
+    def test_login_from_personal_account_button(self, driver: WebDriver):
 
-        driver = webdriver.Chrome()
-        driver.maximize_window()
         driver.get(BASE_URL)
         WebDriverWait(driver, 10).until(expected_conditions.visibility_of_element_located(Locators.PERSONAL_ACCOUNT_BUTTON))
 
@@ -52,12 +46,9 @@ class TestLogin:
 
         assert driver.current_url == BASE_URL
 
-        driver.quit()
         
-    def test_login_from_registration_form(self):
+    def test_login_from_registration_form(self, driver: WebDriver):
 
-        driver = webdriver.Chrome()
-        driver.maximize_window()
         driver.get(REG_URL)
         WebDriverWait(driver, 10).until(expected_conditions.visibility_of_element_located(Locators.LOG_BUTTON_REGISTRATION_FORM))
 
@@ -71,12 +62,9 @@ class TestLogin:
 
         assert driver.current_url == BASE_URL
 
-        driver.quit()
-
-    def test_login_from_forgot_password_form(sefl):
         
-        driver = webdriver.Chrome()
-        driver.maximize_window()
+    def test_login_from_forgot_password_form(self, driver: WebDriver):
+        
         driver.get(FORGOT_PASSWORD_URL)
         WebDriverWait(driver, 10).until(expected_conditions.visibility_of_element_located(Locators.LOG_BUTTON_FORGOT_PASSWORD_FORM))
         
@@ -87,7 +75,7 @@ class TestLogin:
         driver.find_element(*Locators.LOG_PASSWORD_INPUT).send_keys(Creds.password)
         driver.find_element(*Locators.LOG_LOGIN_BUTTON).click()
         WebDriverWait(driver, 10).until(expected_conditions.url_changes(driver.current_url))
-
+        
         assert driver.current_url == BASE_URL
 
-        driver.quit()
+        

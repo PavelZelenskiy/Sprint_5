@@ -1,5 +1,4 @@
-from  selenium import webdriver
-
+from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions
 
@@ -15,10 +14,8 @@ from data import Creds
 
 class TestPersonalAccountTransition:
 
-    def test_personal_acc_transition_unauthorized_user(self):
+    def test_personal_acc_transition_unauthorized_user(self, driver: WebDriver):
 
-        driver = webdriver.Chrome()
-        driver.maximize_window()
         driver.get(BASE_URL)
         WebDriverWait(driver, 10).until(expected_conditions.visibility_of_element_located(Locators.PERSONAL_ACCOUNT_BUTTON))
 
@@ -27,12 +24,9 @@ class TestPersonalAccountTransition:
 
         assert driver.current_url == LOGIN_URL
 
-        driver.quit()
 
-    def test_personal_acc_transition_authorized_user(self):
+    def test_personal_acc_transition_authorized_user(self, driver: WebDriver):
 
-        driver = webdriver.Chrome()
-        driver.maximize_window()
         driver.get(LOGIN_URL)
         WebDriverWait(driver, 10).until(expected_conditions.visibility_of_element_located(Locators.LOG_LOGIN_BUTTON))
 
@@ -43,9 +37,9 @@ class TestPersonalAccountTransition:
 
         driver.find_element(*Locators.PERSONAL_ACCOUNT_BUTTON).click()
         WebDriverWait(driver, 10).until(expected_conditions.url_changes(driver.current_url))
-
+        
         assert driver.current_url == PERSONAL_ACCOUNT_PROFILE_URL
 
-        driver.quit()
+  
 
     
